@@ -40,10 +40,6 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
   bot.reply(message, 'It\'s nice to talk to you directly.')
 })
 
-controller.hears('.*', ['mention'], function (bot, message) {
-  bot.reply(message, 'You really do care about me. :heart:')
-})
-
 controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
     convo.ask('Okay. Asking away.', function(response, convo) {
@@ -51,20 +47,25 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
       controller.storage.channels.get(response.channel, function(err, channel_data) {
         console.log(channel_data);
         convo.say(JSON.stringify(channel_data))
+        var users = channel_data.members;
+
+        for (i = 0; i < users.length; i++) { 
+          bot.startPrivateConversation({user: users[i]}, function(err, privConvo) {
+            privConvo.ask('What are you working on today?',function(response, privConvo) {
+              privConvo.say('Cool, you said: ' + response.text);
+              privConvo.next();
+            })
+
+          })
+        }
       });
-
-      // bot.startPrivateConversation({user: userId}, function(err,privConvo) {
-
-      // })
-
-      convo.say('Cool, asking away. ')
-      console.log(response)
-      convo.say(JSON.stringify(response))
-
-      var users = response.text;
-
+      
     })
   })
+})
+
+controller.hears('.*', ['mention'], function (bot, message) {
+  bot.reply(message, 'You really do care about me. :heart:')
 })
 
 controller.hears('help', ['direct_message', 'direct_mention'], function (bot, message) {
