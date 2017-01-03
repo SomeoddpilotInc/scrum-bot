@@ -56,6 +56,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
         }, function (err, convo) {
           if (!err && convo) {
             convo.say('Hello there! I messaged you because you where in the channel #general');
+            convo.next();
           }
         });
       }
