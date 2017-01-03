@@ -1,5 +1,5 @@
-name: nodebot
-description: A simple node.js starter bot for Beep Boop
+name: scrumbot
+description: A simple node.js bot for Scrum
 avatar: resources/avatar.png
 #background: resources/background.png
 #config:
@@ -12,6 +12,3 @@ avatar: resources/avatar.png
 #    info: This is an secret option
 #    type: secret
 #    default: not secret though
-#screenshots:
-#  - screenshot: resources/screenshot1.png
-#  - screenshot: resources/screenshot2.jpg
