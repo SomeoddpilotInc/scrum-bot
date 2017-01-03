@@ -42,17 +42,17 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 
 controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
-    convo.say('Okay. Asking away.');
-    console.log(convo);
-    bot.api.channel.info({channel: convo.channel}, function (err, results) {
-      var users = results.members;
-      console.log(users);
-      console.log(bot);
-      console.log(convo);
+    convo.say('Okay. Asking away.')
+    console.log(message)
+    controller.storage.channels.get(message.channel, function(err, channel_data) {
+      console.log(channel_data);
+      bot.startConversation(message, function(err, convo) {
+        convo.say(JSON.stringify(channel_data))
+      })
+      var users = channel_data.members;
 
       for (i = 0; i < users.length; i++) {
         var user = users[i];
-        convo.say(user);
         bot.startPrivateConversation({
           user: user
         }, function (err, convo) {
@@ -61,7 +61,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
           }
         });
       }
-
+      
     });
   })
 })
