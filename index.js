@@ -44,7 +44,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
     convo.say('Okay. Asking away.')
     console.log(message)
-    controller.storage.channels.get(message.channel, function(err, channel_data) {
+    controller.storage.channels.get(message['channel'], function(err, channel_data) {
       console.log(channel_data);
       var users = channel_data.members;
 
