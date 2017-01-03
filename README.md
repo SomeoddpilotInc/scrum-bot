@@ -1,7 +1,7 @@
-# starter-node-bot 
+# scrum-bot 
 
 ## Overview
-A simple starting point for creating a Beep Boop hostable, Node.js based Slack bot with botkit
+A bot for scrum functions within Slack via a Beep Boop hostable, Node.js based application built upon botkit
 
 Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. The Slack API documentation can be found [here](https://api.slack.com/).
 
