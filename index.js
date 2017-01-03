@@ -49,7 +49,10 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
 
         for (i = 0; i < users.length; i++) {
           var user = users[i];
-          convo.say(user);
+          convo.say(user)
+          bot.startConversation(message, function(err, convo) {
+            convo.say(user)
+          })
           bot.startPrivateConversation({
             user: user
           }, function (err, convo) {
