@@ -44,9 +44,18 @@ controller.hears('.*', ['mention'], function (bot, message) {
   bot.reply(message, 'You really do care about me. :heart:')
 })
 
-controller.hears('start meeting', ['direct_message'], function (bot, message) {
+controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
-    convo.ask('Okay. Who should participate?', function(response, convo) {
+    convo.ask('Okay. Asking away.', function(response, convo) {
+
+      controller.storage.channels.get(response.channel, function(err, channel_data) {
+        console.log(channel_data);
+        convo.say(JSON.stringify(channel_data))
+      });
+
+      // bot.startPrivateConversation({user: userId}, function(err,privConvo) {
+
+      // })
 
       convo.say('Cool, asking away. ')
       console.log(response)
