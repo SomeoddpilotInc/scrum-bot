@@ -46,7 +46,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
     console.log(message)
     console.log('Channel: ', message.channel)
   })
-  bot.api.channel.info({ channel:message.channel }, function(err, results) {
+  .api.channel.info({ channel:message.channel }, function(err, results) {
     console.log(results);
     var users = results.members;
 
