@@ -43,7 +43,8 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
     convo.say('Okay. Asking away.');
-    bot.api.channel.info({channel: response.channel}, function (err, results) {
+    console.log(convo);
+    bot.api.channel.info({channel: convo.channel}, function (err, results) {
       var users = results.members;
       console.log(users);
       console.log(bot);
