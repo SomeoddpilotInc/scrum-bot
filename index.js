@@ -42,29 +42,26 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 
 controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
-    convo.say('Okay. Asking away.', function(response, convo) {
+    convo.say('Okay. Asking away.');
+    bot.api.channel.info({channel: response.channel}, function (err, results) {
+      var users = results.members;
+      console.log(users);
+      console.log(bot);
+      console.log(convo);
 
-      bot.api.channel.info({channel: response.channel}, function (err, results) {
-        var users = results.members;
-        console.log(users);
-        console.log(bot);
-        console.log(convo);
+      for (i = 0; i < users.length; i++) {
+        var user = users[i];
+        convo.say(user);
+        bot.startPrivateConversation({
+          user: user
+        }, function (err, convo) {
+          if (!err && convo) {
+            convo.say('Hello there! I messaged you because you where in the channel #general');
+          }
+        });
+      }
 
-        for (i = 0; i < users.length; i++) {
-          var user = users[i];
-          convo.say(user);
-          bot.startPrivateConversation({
-            user: user
-          }, function (err, convo) {
-            if (!err && convo) {
-              convo.say('Hello there! I messaged you because you where in the channel #general');
-            }
-          });
-        }
-
-      });
-      
-    })
+    });
   })
 })
 
