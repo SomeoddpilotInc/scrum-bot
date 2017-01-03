@@ -44,15 +44,12 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
   bot.startConversation(message, function(err, convo) {
     convo.say('Okay. Asking away.', function(response, convo) {
 
-      controller.storage.channels.get(response.channel, function(err, channel_data) {
-        console.log(channel_data);
-        bot.startConversation(message, function(err, convo) {
-          convo.say(JSON.stringify(channel_data))
-        })
-        var users = channel_data.members;
+      bot.api.channel.info({channel: response.channel}, function (err, results) {
+        var users = results.members;
 
         for (i = 0; i < users.length; i++) {
           var user = users[i];
+          convo.say(user);
           bot.startPrivateConversation({
             user: user
           }, function (err, convo) {
@@ -61,7 +58,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
             }
           });
         }
-        
+
       });
       
     })
