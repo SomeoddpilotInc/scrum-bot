@@ -5,7 +5,7 @@ var token = process.env.SLACK_TOKEN
 var controller = Botkit.slackbot({
   // reconnect to Slack RTM when connection goes bad
   retry: Infinity,
-  debug: false
+  debug: true
 })
 
 // Assume single team mode if we have a SLACK_TOKEN
@@ -42,6 +42,20 @@ controller.hears(['hello', 'hi'], ['direct_message'], function (bot, message) {
 
 controller.hears('.*', ['mention'], function (bot, message) {
   bot.reply(message, 'You really do care about me. :heart:')
+})
+
+controller.hears('start meeting', ['direct_message'], function (bot, message) {
+  bot.startConversation(message, function(err, convo) {
+    convo.ask('Okay. Who should participate?', function(response, convo) {
+
+      convo.say('Cool, asking away. ')
+      console.log(response)
+      convo.say(JSON.stringify(response))
+
+      var users = response.text;
+
+    })
+  })
 })
 
 controller.hears('help', ['direct_message', 'direct_mention'], function (bot, message) {
