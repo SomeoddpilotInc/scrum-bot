@@ -45,24 +45,24 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
     convo.say('Okay. Asking away.')
     console.log(message)
     console.log('Channel: ', message.channel)
-    bot.api.channel.info({ channel:message.channel }, function(err, results) {
-      console.log(results);
-      var users = results.members;
-
-      for (i = 0; i < users.length; i++) {
-        var user = users[i];
-        bot.startPrivateConversation({
-          user: user
-        }, function (err, convo) {
-          if (!err && convo) {
-            convo.say('Hello there! I messaged you because you where in the channel #general');
-            convo.next();
-          }
-        });
-      }
-      
-    });
   })
+  bot.api.channel.info({ channel:message.channel }, function(err, results) {
+    console.log(results);
+    var users = results.members;
+
+    for (i = 0; i < users.length; i++) {
+      var user = users[i];
+      bot.startPrivateConversation({
+        user: user
+      }, function (err, convo) {
+        if (!err && convo) {
+          convo.say('Hello there! I messaged you because you where in the channel #general');
+          convo.next();
+        }
+      });
+    }
+    
+  });
 })
 
 controller.hears('.*', ['mention'], function (bot, message) {
