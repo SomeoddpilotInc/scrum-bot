@@ -45,8 +45,7 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
     convo.say('Okay. Asking away.')
     console.log(message)
     console.log('Channel: ', message.channel)
-    var channel = message.channel;
-    this.api.channel.info({ channel:channel }, function(err, results) {
+    bot.api.channel.info({ channel:message.channel }, function(err, results) {
       console.log(results);
       var users = results.members;
 
