@@ -52,13 +52,16 @@ controller.hears('start meeting', ['mention'], function (bot, message) {
         var users = channel_data.members;
 
         for (i = 0; i < users.length; i++) {
-          bot.startPrivateConversation({user: users[i]}, function(err, privConvo) {
-            privConvo.ask('What are you working on today?',function(response, privConvo) {
-              privConvo.say('Cool, you said: ' + response.text);
-              privConvo.next();
-            })
-          })
+          var user = users[i];
+          bot.startPrivateConversation({
+            user: user
+          }, function (err, convo) {
+            if (!err && convo) {
+              convo.say('Hello there! I messaged you because you where in the channel #general');
+            }
+          });
         }
+        
       });
       
     })
